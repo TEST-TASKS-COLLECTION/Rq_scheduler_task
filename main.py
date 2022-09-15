@@ -1,14 +1,16 @@
 from redis import Redis
 from rq import Queue
 from rq.job import Job
+
 from rq_scheduler import Scheduler
 from datetime import datetime, timedelta
-from workers import task1
+from codes.tasks import task1
 # from mero_func import noice
 
 # scheduler = Scheduler(connection=Redis())
 # r = Redis(port=7739)
-r = Redis()
+r = Redis() # local
+# r = Redis(host="redis") # inside of docker
 q = Queue(connection=r)
 # q = Queue('test', connection=r)
 # scheduler = Scheduler(queue=q, connection=r)
@@ -24,7 +26,7 @@ if __name__ == "__main__":
     # print("THE JOB STATUS IS", f.get_status())
     # print(task1(3))
     print("TIME IS NOW", datetime.now())
-    job = q.enqueue(task1)
+    job = q.enqueue(task1, 3)
     # scheduler.schedule(
     #     scheduled_time=datetime.utcnow(), # Time for first execution, in UTC timezone
     #     func=sucp,                     # Function to be queued
