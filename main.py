@@ -9,8 +9,8 @@ from codes.tasks import task1
 
 # scheduler = Scheduler(connection=Redis())
 # r = Redis(port=7739)
-r = Redis() # local
-# r = Redis(host="redis") # inside of docker
+# r = Redis() # local
+r = Redis(host="redis") # inside of docker
 q = Queue(connection=r)
 # q = Queue('test', connection=r)
 # scheduler = Scheduler(queue=q, connection=r)
@@ -21,8 +21,8 @@ scheduler = Scheduler(queue=q, connection=r)
 
 
 if __name__ == "__main__":
-    # f = scheduler.enqueue_at(datetime(2022, 9, 15, 15, 55, 0), func, 1)
-    # f = scheduler.enqueue_in(timedelta(seconds=2), sucp )
+    f = scheduler.enqueue_at(datetime(2022, 9, 15, 18, 23, 0), task1, 1)
+    f = scheduler.enqueue_in(timedelta(seconds=2), task1, 5 )
     # print("THE JOB STATUS IS", f.get_status())
     # print(task1(3))
     print("TIME IS NOW", datetime.now())

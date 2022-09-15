@@ -9,7 +9,7 @@ services:
       - redis
       - worker_main
     restart: on-failure
-    command: "python codes/p1.py"
+    command: "python main.py"
   
   worker_main:
     build: .
@@ -17,6 +17,13 @@ services:
     depends_on:
       - redis
     command: rq worker --url redis://redis:6379/0
+
+  scheduler:
+    build: .
+    container_name: scheduler_main
+    depends_on:
+      - redis
+    command: rqscheduler -v --url redis://redis:6379/0
 
   redis:
     image: "redis:alpine"
